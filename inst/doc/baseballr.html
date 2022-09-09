@@ -12,11 +12,23 @@
 
 <meta name="author" content="Saiem Gilani   " />
 
-<meta name="date" content="2022-04-21" />
+<meta name="date" content="2022-09-09" />
 
 <title>Getting Started with baseballr</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -128,7 +140,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -141,29 +333,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <h1 class="title toc-ignore">Getting Started with baseballr</h1>
-<h4 class="author">Saiem Gilani <br><a href="https://twitter.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTg4IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxMzQiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxMzQiIHdpZHRoPSI1NCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPXNhaWVtZ2lsYW5pIj48cmVjdCB3aWR0aD0iMTM0IiBoZWlnaHQ9IjI4IiBmaWxsPSJyZ2JhKDAsMCwwLDApIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9Ijc1NSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI5MzAiIGZpbGw9IiNmZmYiPkBTQUlFTUdJTEFOSTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vc2FpZW1naWxhbmkvZm9sbG93ZXJzIj48cmVjdCB3aWR0aD0iNTQiIGhlaWdodD0iMjgiIHg9IjEzNCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxNjEwIiB5PSIxNzUiIHRleHRMZW5ndGg9IjMwMCIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjEuOEs8L3RleHQ+PC9hPjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a> <a href="https://github.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTU0Ljc1IiBoZWlnaHQ9IjI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZPTExPV0VSUzogOTEiPjx0aXRsZT5GT0xMT1dFUlM6IDkxPC90aXRsZT48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxMTQuMjUiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxMTQuMjUiIHdpZHRoPSI0MC41IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWVlIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjEwMCI+PGltYWdlIHg9IjkiIHk9IjciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCbWFXeHNQU0ozYUdsMFpYTnRiMnRsSWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1IybDBTSFZpUEM5MGFYUnNaVDQ4Y0dGMGFDQmtQU0pOTVRJZ0xqSTVOMk10Tmk0Mk15QXdMVEV5SURVdU16Y3pMVEV5SURFeUlEQWdOUzR6TURNZ015NDBNemdnT1M0NElEZ3VNakExSURFeExqTTROUzQyTGpFeE15NDRNaTB1TWpVNExqZ3lMUzQxTnpjZ01DMHVNamcxTFM0d01TMHhMakEwTFM0d01UVXRNaTR3TkMwekxqTXpPQzQzTWpRdE5DNHdOREl0TVM0Mk1TMDBMakEwTWkweExqWXhRelF1TkRJeUlERTRMakEzSURNdU5qTXpJREUzTGpjZ015NDJNek1nTVRjdU4yTXRNUzR3T0RjdExqYzBOQzR3T0RRdExqY3lPUzR3T0RRdExqY3lPU0F4TGpJd05TNHdPRFFnTVM0NE16Z2dNUzR5TXpZZ01TNDRNemdnTVM0eU16WWdNUzR3TnlBeExqZ3pOU0F5TGpnd09TQXhMak13TlNBekxqUTVOUzQ1T1RndU1UQTRMUzQzTnpZdU5ERTNMVEV1TXpBMUxqYzJMVEV1TmpBMUxUSXVOalkxTFM0ekxUVXVORFkyTFRFdU16TXlMVFV1TkRZMkxUVXVPVE1nTUMweExqTXhMalEyTlMweUxqTTRJREV1TWpNMUxUTXVNakl0TGpFek5TMHVNekF6TFM0MU5DMHhMalV5TXk0eE1EVXRNeTR4TnpZZ01DQXdJREV1TURBMUxTNHpNaklnTXk0eklERXVNak11T1RZdExqSTJOeUF4TGprNExTNHpPVGtnTXkwdU5EQTFJREV1TURJdU1EQTJJREl1TURRdU1UTTRJRE1nTGpRd05TQXlMakk0TFRFdU5UVXlJRE11TWpnMUxURXVNak1nTXk0eU9EVXRNUzR5TXk0Mk5EVWdNUzQyTlRNdU1qUWdNaTQ0TnpNdU1USWdNeTR4TnpZdU56WTFMamcwSURFdU1qTWdNUzQ1TVNBeExqSXpJRE11TWpJZ01DQTBMall4TFRJdU9EQTFJRFV1TmpJMUxUVXVORGMxSURVdU9USXVOREl1TXpZdU9ERWdNUzR3T1RZdU9ERWdNaTR5TWlBd0lERXVOakEyTFM0d01UVWdNaTQ0T1RZdExqQXhOU0F6TGpJNE5pQXdJQzR6TVRVdU1qRXVOamt1T0RJMUxqVTNRekl3TGpVMk5TQXlNaTR3T1RJZ01qUWdNVGN1TlRreUlESTBJREV5TGpJNU4yTXdMVFl1TmpJM0xUVXVNemN6TFRFeUxURXlMVEV5SWk4K1BDOXpkbWMrIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ni4yNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI3MzIuNSIgZmlsbD0iI2ZmZiI+Rk9MTE9XRVJTPC90ZXh0Pjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxMzQ1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjE2NSIgZmlsbD0iIzMzMyIgZm9udC13ZWlnaHQ9ImJvbGQiPjkxPC90ZXh0PjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a></h4>
-<h4 class="date">2022-04-21</h4>
+<h4 class="author">Saiem Gilani
+<br><a href="https://twitter.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTc0LjUiIGhlaWdodD0iMjgiPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjEzNCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjEzNCIgd2lkdGg9IjQwLjUiIGhlaWdodD0iMjgiIGZpbGw9IiMwMDdlYzYiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTAwIj48aW1hZ2UgeD0iOSIgeT0iNyIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiB4bGluazpocmVmPSJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUJtYVd4c1BTSWpNVVJCTVVZeUlpQnliMnhsUFNKcGJXY2lJSFpwWlhkQ2IzZzlJakFnTUNBeU5DQXlOQ0lnZUcxc2JuTTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JajQ4ZEdsMGJHVStWSGRwZEhSbGNqd3ZkR2wwYkdVK1BIQmhkR2dnWkQwaVRUSXpMamsxTXlBMExqVTNZVEV3SURFd0lEQWdNREV0TWk0NE1qVXVOemMxSURRdU9UVTRJRFF1T1RVNElEQWdNREF5TGpFMk15MHlMamN5TTJNdExqazFNUzQxTlRVdE1pNHdNRFV1T1RVNUxUTXVNVEkzSURFdU1UZzBZVFF1T1RJZ05DNDVNaUF3SURBd0xUZ3VNemcwSURRdU5EZ3lRemN1TmprZ09DNHdPVFVnTkM0d05qY2dOaTR4TXlBeExqWTBJRE11TVRZeVlUUXVPREl5SURRdU9ESXlJREFnTURBdExqWTJOaUF5TGpRM05XTXdJREV1TnpFdU9EY2dNeTR5TVRNZ01pNHhPRGdnTkM0d09UWmhOQzQ1TURRZ05DNDVNRFFnTUNBd01TMHlMakl5T0MwdU5qRTJkaTR3Tm1FMExqa3lNeUEwTGpreU15QXdJREF3TXk0NU5EWWdOQzQ0TWpjZ05DNDVPVFlnTkM0NU9UWWdNQ0F3TVMweUxqSXhNaTR3T0RVZ05DNDVNellnTkM0NU16WWdNQ0F3TURRdU5qQTBJRE11TkRFM0lEa3VPRFkzSURrdU9EWTNJREFnTURFdE5pNHhNRElnTWk0eE1EVmpMUzR6T1NBd0xTNDNOemt0TGpBeU15MHhMakUzTFM0d05qZGhNVE11T1RrMUlERXpMams1TlNBd0lEQXdOeTQxTlRjZ01pNHlNRGxqT1M0d05UTWdNQ0F4TXk0NU9UZ3ROeTQwT1RZZ01UTXVPVGs0TFRFekxqazROU0F3TFM0eU1TQXdMUzQwTWkwdU1ERTFMUzQyTTBFNUxqa3pOU0E1TGprek5TQXdJREF3TWpRZ05DNDFPWG9pTHo0OEwzTjJaejQ9Ii8+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vaW50ZW50L2ZvbGxvdz9zY3JlZW5fbmFtZT1zYWllbWdpbGFuaSI+PHJlY3Qgd2lkdGg9IjEzNCIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI3NTUiIHk9IjE3NSIgdGV4dExlbmd0aD0iOTMwIiBmaWxsPSIjZmZmIj5AU0FJRU1HSUxBTkk8L3RleHQ+PC9hPjxhIHRhcmdldD0iX2JsYW5rIiB4bGluazpocmVmPSJodHRwczovL3R3aXR0ZXIuY29tL3NhaWVtZ2lsYW5pL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjQwLjUiIGhlaWdodD0iMjgiIHg9IjEzNCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxNTQyLjUiIHk9IjE3NSIgdGV4dExlbmd0aD0iMTY1IiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iYm9sZCI+M0s8L3RleHQ+PC9hPjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a>
+<a href="https://github.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYzIiBoZWlnaHQ9IjI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZPTExPV0VSUzogMTM1Ij48dGl0bGU+Rk9MTE9XRVJTOiAxMzU8L3RpdGxlPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjExNC4yNSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjExNC4yNSIgd2lkdGg9IjQ4Ljc1IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWVlIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjEwMCI+PGltYWdlIHg9IjkiIHk9IjciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCbWFXeHNQU0ozYUdsMFpYTnRiMnRsSWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1IybDBTSFZpUEM5MGFYUnNaVDQ4Y0dGMGFDQmtQU0pOTVRJZ0xqSTVOMk10Tmk0Mk15QXdMVEV5SURVdU16Y3pMVEV5SURFeUlEQWdOUzR6TURNZ015NDBNemdnT1M0NElEZ3VNakExSURFeExqTTROUzQyTGpFeE15NDRNaTB1TWpVNExqZ3lMUzQxTnpjZ01DMHVNamcxTFM0d01TMHhMakEwTFM0d01UVXRNaTR3TkMwekxqTXpPQzQzTWpRdE5DNHdOREl0TVM0Mk1TMDBMakEwTWkweExqWXhRelF1TkRJeUlERTRMakEzSURNdU5qTXpJREUzTGpjZ015NDJNek1nTVRjdU4yTXRNUzR3T0RjdExqYzBOQzR3T0RRdExqY3lPUzR3T0RRdExqY3lPU0F4TGpJd05TNHdPRFFnTVM0NE16Z2dNUzR5TXpZZ01TNDRNemdnTVM0eU16WWdNUzR3TnlBeExqZ3pOU0F5TGpnd09TQXhMak13TlNBekxqUTVOUzQ1T1RndU1UQTRMUzQzTnpZdU5ERTNMVEV1TXpBMUxqYzJMVEV1TmpBMUxUSXVOalkxTFM0ekxUVXVORFkyTFRFdU16TXlMVFV1TkRZMkxUVXVPVE1nTUMweExqTXhMalEyTlMweUxqTTRJREV1TWpNMUxUTXVNakl0TGpFek5TMHVNekF6TFM0MU5DMHhMalV5TXk0eE1EVXRNeTR4TnpZZ01DQXdJREV1TURBMUxTNHpNaklnTXk0eklERXVNak11T1RZdExqSTJOeUF4TGprNExTNHpPVGtnTXkwdU5EQTFJREV1TURJdU1EQTJJREl1TURRdU1UTTRJRE1nTGpRd05TQXlMakk0TFRFdU5UVXlJRE11TWpnMUxURXVNak1nTXk0eU9EVXRNUzR5TXk0Mk5EVWdNUzQyTlRNdU1qUWdNaTQ0TnpNdU1USWdNeTR4TnpZdU56WTFMamcwSURFdU1qTWdNUzQ1TVNBeExqSXpJRE11TWpJZ01DQTBMall4TFRJdU9EQTFJRFV1TmpJMUxUVXVORGMxSURVdU9USXVOREl1TXpZdU9ERWdNUzR3T1RZdU9ERWdNaTR5TWlBd0lERXVOakEyTFM0d01UVWdNaTQ0T1RZdExqQXhOU0F6TGpJNE5pQXdJQzR6TVRVdU1qRXVOamt1T0RJMUxqVTNRekl3TGpVMk5TQXlNaTR3T1RJZ01qUWdNVGN1TlRreUlESTBJREV5TGpJNU4yTXdMVFl1TmpJM0xUVXVNemN6TFRFeUxURXlMVEV5SWk4K1BDOXpkbWMrIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ni4yNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI3MzIuNSIgZmlsbD0iI2ZmZiI+Rk9MTE9XRVJTPC90ZXh0Pjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxMzg2LjI1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjI0Ny41IiBmaWxsPSIjMzMzIiBmb250LXdlaWdodD0iYm9sZCI+MTM1PC90ZXh0PjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a></h4>
+<h4 class="date">2022-09-09</h4>
 
 
 
 <p>Welcome folks,</p>
-<p>I’m Saiem Gilani, one of the <a href="https://billpetti.github.io/baseballr/authors.html" title="Authors and contributors to baseballr">authors</a> of <a href="https://billpetti.github.io/baseballr/"><code>baseballr</code></a>, and I hope to give the community a high-quality resource for accessing men’s baseball data for statistical analysis, baseball research, and more. I am excited to show you some of what you can do with this edition of the package.</p>
+<p>I’m Saiem Gilani, one of the <a href="https://billpetti.github.io/baseballr/authors.html" title="Authors and contributors to baseballr">authors</a> of <a href="https://billpetti.github.io/baseballr/"><code>baseballr</code></a>,
+and I hope to give the community a high-quality resource for accessing
+men’s baseball data for statistical analysis, baseball research, and
+more. I am excited to show you some of what you can do with this edition
+of the package.</p>
 <div id="installing-r-and-rstudio" class="section level3">
 <h3><strong>Installing R and RStudio</strong></h3>
 <ol style="list-style-type: decimal">
 <li>Head to <a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a></li>
-<li>Select the appropriate link for your operating system (Windows, Mac OS X, or Linux)</li>
+<li>Select the appropriate link for your operating system (Windows, Mac
+OS X, or Linux)</li>
 </ol>
 <ul>
-<li><strong>Windows</strong> - Select base and download the most recent version</li>
-<li><strong>Mac OS X</strong> - Select Latest Release, but check to make sure your OS is the correct version. Look through Binaries for Legacy OS X Systems if you are on an older release</li>
-<li><strong>Linux</strong> - Select the appropriate distro and follow the installation instructions</li>
+<li><strong>Windows</strong> - Select base and download the most recent
+version</li>
+<li><strong>Mac OS X</strong> - Select Latest Release, but check to make
+sure your OS is the correct version. Look through Binaries for Legacy OS
+X Systems if you are on an older release</li>
+<li><strong>Linux</strong> - Select the appropriate distro and follow
+the installation instructions</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>Head to <a href="https://www.rstudio.com/products/rstudio/download/#download" title="Download the appropriate version of RStudio (Free) for your operating system to use with R">RStudio.com</a></li>
-<li>Follow the associated download and installation instructions for RStudio.</li>
-<li>Start peering over the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf">RStudio IDE Cheatsheet</a>. <em>An IDE is an integrated development environment.</em></li>
-<li>For <strong>Windows</strong> users: I recommend you install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. This is not an R package! It is “a collection of resources for building packages for R under Microsoft Windows, or for building R itself”. Go to <a href="https://cran.r-project.org/bin/windows/Rtools/">https://cran.r-project.org/bin/windows/Rtools/</a> and follow the directions for installation.</li>
+<li>Follow the associated download and installation instructions for
+RStudio.</li>
+<li>Start peering over the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rstudio-ide.pdf">RStudio
+IDE Cheatsheet</a>. <em>An IDE is an integrated development
+environment.</em></li>
+<li>For <strong>Windows</strong> users: I recommend you install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. This
+is not an R package! It is “a collection of resources for building
+packages for R under Microsoft Windows, or for building R itself”. Go to
+<a href="https://cran.r-project.org/bin/windows/Rtools/">https://cran.r-project.org/bin/windows/Rtools/</a>
+and follow the directions for installation.</li>
 </ol>
 </div>
 <div id="install-baseballr" class="section level2">
@@ -175,45 +385,88 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load_current_gh</span>(<span class="st">&quot;billpetti/baseballr&quot;</span>)</span></code></pre></div>
 <div id="the-data" class="section level3">
 <h3><strong>The Data</strong></h3>
-<p>There are generally speaking <strong>eight</strong> men’s baseball data sources accessible from this package:</p>
+<p>There are generally speaking <strong>eight</strong> men’s baseball
+data sources accessible from this package:</p>
 <ul>
-<li><a href="https://github.com/saiemgilani/baseballr-data"><code>baseballr-data</code> repo</a> <a href="https://twitter.com/sportsdataverse"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjIwLjc1IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxNzIiIHdpZHRoPSI0OC43NSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPXNwb3J0c2RhdGF2ZXJzZSI+PHJlY3Qgd2lkdGg9IjE3MiIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI5NDUiIHk9IjE3NSIgdGV4dExlbmd0aD0iMTMxMCIgZmlsbD0iI2ZmZiI+QFNQT1JUU0RBVEFWRVJTRTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vc3BvcnRzZGF0YXZlcnNlL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjQ4Ljc1IiBoZWlnaHQ9IjI4IiB4PSIxNzIiIGZpbGw9InJnYmEoMCwwLDAsMCkiLz48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iMTk2My43NSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIyNDcuNSIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjU4NDwvdGV4dD48L2E+PC9nPjwvc3ZnPg==" alt="Twitter Follow" /></a></li>
+<li><a href="https://github.com/sportsdataverse/baseballr-data"><code>baseballr-data</code>
+repo</a> <a href="https://twitter.com/sportsdataverse"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjI2IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxNzIiIHdpZHRoPSI1NCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPXNwb3J0c2RhdGF2ZXJzZSI+PHJlY3Qgd2lkdGg9IjE3MiIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI5NDUiIHk9IjE3NSIgdGV4dExlbmd0aD0iMTMxMCIgZmlsbD0iI2ZmZiI+QFNQT1JUU0RBVEFWRVJTRTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vc3BvcnRzZGF0YXZlcnNlL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjU0IiBoZWlnaHQ9IjI4IiB4PSIxNzIiIGZpbGw9InJnYmEoMCwwLDAsMCkiLz48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iMTk5MCIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIzMDAiIGZpbGw9IiNmZmYiIGZvbnQtd2VpZ2h0PSJib2xkIj4xLjRLPC90ZXh0PjwvYT48L2c+PC9zdmc+" alt="Twitter Follow" /></a></li>
 <li><a href="https://www.mlb.com/">MLB Stats API</a></li>
-<li><a href="https://baseballsavant.mlb.com/">Baseball Savant’s Statcast</a></li>
-<li><a href="https://github.com/chadwickbureau/register/">Chadwick Bureau’s Public Register of Baseball Players</a></li>
-<li><a href="https://www.baseball-reference.com/">Baseball Reference</a></li>
+<li><a href="https://baseballsavant.mlb.com/">Baseball Savant’s
+Statcast</a></li>
+<li><a href="https://github.com/chadwickbureau/register/">Chadwick
+Bureau’s Public Register of Baseball Players</a></li>
+<li><a href="https://www.baseball-reference.com/">Baseball
+Reference</a></li>
 <li><a href="https://www.fangraphs.com/">FanGraphs</a></li>
 <li><a href="https://www.retrosheet.org/">Retrosheet</a></li>
 <li><a href="https://stats.ncaa.org/">NCAA</a></li>
 </ul>
 <div id="function-names-indicate-the-data-source" class="section level4">
 <h4><strong>Function names indicate the data source</strong></h4>
-<p>As of <a href="https://billpetti.github.io/baseballr/news/index.html#baseballr-1.0.0">baseballr v1.0.0</a>, a function naming convention was implemented to have the data source indicator appear at the start of the function name:</p>
+<p>As of <a href="https://billpetti.github.io/baseballr/news/index.html#baseballr-1.0.0">baseballr
+v1.0.0</a>, a function naming convention was implemented to have the
+data source indicator appear at the start of the function name:</p>
 <ul>
-<li><p>Functions that use the <a href="https://github.com/saiemgilani/baseballr-data"><code>baseballr-data</code> repository</a> will contain <code>load_</code> or <code>update_</code> in the function name and would be considered loading functions for the play-by-play data, team box scores, and player box scores.</p></li>
-<li><p>Functions that use the MLB Stats API start with <code>mlb_</code> by convention and should be assumed as <code>get</code> functions. As of <code>baseballr</code> version 1.2.0, the package exports ~88 functions covering the MLB Stats API.</p></li>
-<li><p>Functions that use one of <a href="https://baseballsavant.mlb.com/">Baseball Savant’s Statcast</a> APIs start with <code>statcast_</code> by convention and should be assumed as <code>get</code> functions. These functions allow for live access to Statcast data for the MLB games in-progress. As of <code>baseballr</code> version 1.2.0, the package exports ~5 Statcast-related functions.</p></li>
-<li><p>Functions that use <a href="https://github.com/chadwickbureau/register/">Chadwick Bureau’s Public Register of Baseball Players</a> start with <code>chadwick_</code>, <code>playerid_</code>, or <code>playername_</code> by convention and should be assumed as <code>get</code> functions. These functions allow for access to the Bureau’s public register of baseball players. As of <code>baseballr</code> version 1.2.0, the package exports 3 functions sourced using the Chadwick Bureau’s public register of baseball players.</p></li>
-<li><p>Functions that use Baseball Reference’s website start with <code>bref_</code> by convention and should be assumed as <code>get</code> functions. As of <code>baseballr</code> version 1.2.0, the package exports ~4 functions covering <a href="https://www.baseball-reference.com/">Baseball Reference</a>.</p></li>
-<li><p>Functions that use FanGraphs’s baseball website start with <code>fg_</code> by convention and should be assumed as <code>get</code> functions. As of <code>baseballr</code> version 1.2.0, the package exports ~11 functions covering <a href="https://www.fangraphs.com/">FanGraphs.com</a>.</p></li>
-<li><p>Functions that use Retrosheet’s baseball data start with <code>retrosheet_</code> by convention and should be assumed as <code>get</code> functions. As of <code>baseballr</code> version 1.2.0, the package exports 1 function for <a href="https://www.retrosheet.org/">Retrosheet Data</a>.</p></li>
-<li><p>Functions that use the NCAA website start with <code>ncaa_</code> by convention and should be assumed as <code>get</code> functions. As of <code>baseballr</code> version 1.2.0, the package exports ~8 function covering the <a href="https://stats.ncaa.org/">NCAA Stats portal</a>.</p></li>
+<li><p>Functions that use the <a href="https://github.com/sportsdataverse/baseballr-data"><code>baseballr-data</code>
+repository</a> will contain <code>load_</code> or <code>update_</code>
+in the function name and would be considered loading functions for the
+play-by-play data, team box scores, and player box scores.</p></li>
+<li><p>Functions that use the MLB Stats API start with <code>mlb_</code>
+by convention and should be assumed as <code>get</code> functions. As of
+<code>baseballr</code> version 1.3.0, the package exports ~88 functions
+covering the MLB Stats API.</p></li>
+<li><p>Functions that use one of <a href="https://baseballsavant.mlb.com/">Baseball Savant’s Statcast</a>
+APIs start with <code>statcast_</code> by convention and should be
+assumed as <code>get</code> functions. These functions allow for live
+access to Statcast data for the MLB games in-progress. As of
+<code>baseballr</code> version 1.3.0, the package exports ~5
+Statcast-related functions.</p></li>
+<li><p>Functions that use <a href="https://github.com/chadwickbureau/register/">Chadwick Bureau’s
+Public Register of Baseball Players</a> start with
+<code>chadwick_</code>, <code>playerid_</code>, or
+<code>playername_</code> by convention and should be assumed as
+<code>get</code> functions. These functions allow for access to the
+Bureau’s public register of baseball players. As of
+<code>baseballr</code> version 1.3.0, the package exports 3 functions
+sourced using the Chadwick Bureau’s public register of baseball
+players.</p></li>
+<li><p>Functions that use Baseball Reference’s website start with
+<code>bref_</code> by convention and should be assumed as
+<code>get</code> functions. As of <code>baseballr</code> version 1.3.0,
+the package exports ~4 functions covering <a href="https://www.baseball-reference.com/">Baseball
+Reference</a>.</p></li>
+<li><p>Functions that use FanGraphs’s baseball website start with
+<code>fg_</code> by convention and should be assumed as <code>get</code>
+functions. As of <code>baseballr</code> version 1.3.0, the package
+exports ~11 functions covering <a href="https://www.fangraphs.com/">FanGraphs.com</a>.</p></li>
+<li><p>Functions that use Retrosheet’s baseball data start with
+<code>retrosheet_</code> by convention and should be assumed as
+<code>get</code> functions. As of <code>baseballr</code> version 1.3.0,
+the package exports 1 function for <a href="https://www.retrosheet.org/">Retrosheet Data</a>.</p></li>
+<li><p>Functions that use the NCAA website start with <code>ncaa_</code>
+by convention and should be assumed as <code>get</code> functions. As of
+<code>baseballr</code> version 1.3.0, the package exports ~8 function
+covering the <a href="https://stats.ncaa.org/">NCAA Stats
+portal</a>.</p></li>
 </ul>
 </div>
 </div>
 </div>
 <div id="follow-the-sportsdataverse-on-twitter-and-star-this-repo" class="section level2">
-<h2>Follow the <a href="https://twitter.com/SportsDataverse">SportsDataverse</a> on Twitter and star this repo</h2>
-<p><a href="https://twitter.com/SportsDataverse"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjIwLjc1IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxNzIiIHdpZHRoPSI0OC43NSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPVNwb3J0c0RhdGF2ZXJzZSI+PHJlY3Qgd2lkdGg9IjE3MiIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI5NDUiIHk9IjE3NSIgdGV4dExlbmd0aD0iMTMxMCIgZmlsbD0iI2ZmZiI+QFNQT1JUU0RBVEFWRVJTRTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vU3BvcnRzRGF0YXZlcnNlL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjQ4Ljc1IiBoZWlnaHQ9IjI4IiB4PSIxNzIiIGZpbGw9InJnYmEoMCwwLDAsMCkiLz48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iMTk2My43NSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIyNDcuNSIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjU4NDwvdGV4dD48L2E+PC9nPjwvc3ZnPg==" alt="Twitter Follow" /></a></p>
-<p><a href="https://github.com/billpetti/baseballr/stargazers/"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTk1LjI1IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNDYuNSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjE0Ni41IiB3aWR0aD0iNDguNzUiIGhlaWdodD0iMjgiIGZpbGw9IiNlZWUiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTAwIj48aW1hZ2UgeD0iOSIgeT0iNyIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiB4bGluazpocmVmPSJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUJtYVd4c1BTSjNhR2wwWlhOdGIydGxJaUJ5YjJ4bFBTSnBiV2NpSUhacFpYZENiM2c5SWpBZ01DQXlOQ0F5TkNJZ2VHMXNibk05SW1oMGRIQTZMeTkzZDNjdWR6TXViM0puTHpJd01EQXZjM1puSWo0OGRHbDBiR1UrUjJsMFNIVmlQQzkwYVhSc1pUNDhjR0YwYUNCa1BTSk5NVElnTGpJNU4yTXROaTQyTXlBd0xURXlJRFV1TXpjekxURXlJREV5SURBZ05TNHpNRE1nTXk0ME16Z2dPUzQ0SURndU1qQTFJREV4TGpNNE5TNDJMakV4TXk0NE1pMHVNalU0TGpneUxTNDFOemNnTUMwdU1qZzFMUzR3TVMweExqQTBMUzR3TVRVdE1pNHdOQzB6TGpNek9DNDNNalF0TkM0d05ESXRNUzQyTVMwMExqQTBNaTB4TGpZeFF6UXVOREl5SURFNExqQTNJRE11TmpNeklERTNMamNnTXk0Mk16TWdNVGN1TjJNdE1TNHdPRGN0TGpjME5DNHdPRFF0TGpjeU9TNHdPRFF0TGpjeU9TQXhMakl3TlM0d09EUWdNUzQ0TXpnZ01TNHlNellnTVM0NE16Z2dNUzR5TXpZZ01TNHdOeUF4TGpnek5TQXlMamd3T1NBeExqTXdOU0F6TGpRNU5TNDVPVGd1TVRBNExTNDNOell1TkRFM0xURXVNekExTGpjMkxURXVOakExTFRJdU5qWTFMUzR6TFRVdU5EWTJMVEV1TXpNeUxUVXVORFkyTFRVdU9UTWdNQzB4TGpNeExqUTJOUzB5TGpNNElERXVNak0xTFRNdU1qSXRMakV6TlMwdU16QXpMUzQxTkMweExqVXlNeTR4TURVdE15NHhOellnTUNBd0lERXVNREExTFM0ek1qSWdNeTR6SURFdU1qTXVPVFl0TGpJMk55QXhMams0TFM0ek9Ua2dNeTB1TkRBMUlERXVNREl1TURBMklESXVNRFF1TVRNNElETWdMalF3TlNBeUxqSTRMVEV1TlRVeUlETXVNamcxTFRFdU1qTWdNeTR5T0RVdE1TNHlNeTQyTkRVZ01TNDJOVE11TWpRZ01pNDROek11TVRJZ015NHhOell1TnpZMUxqZzBJREV1TWpNZ01TNDVNU0F4TGpJeklETXVNaklnTUNBMExqWXhMVEl1T0RBMUlEVXVOakkxTFRVdU5EYzFJRFV1T1RJdU5ESXVNell1T0RFZ01TNHdPVFl1T0RFZ01pNHlNaUF3SURFdU5qQTJMUzR3TVRVZ01pNDRPVFl0TGpBeE5TQXpMakk0TmlBd0lDNHpNVFV1TWpFdU5qa3VPREkxTGpVM1F6SXdMalUyTlNBeU1pNHdPVElnTWpRZ01UY3VOVGt5SURJMElERXlMakk1TjJNd0xUWXVOakkzTFRVdU16Y3pMVEV5TFRFeUxURXlJaTgrUEM5emRtYysiLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL2JpbGxwZXR0aS9iYXNlYmFsbHIiPjxyZWN0IHdpZHRoPSIxNDYuNSIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI4MTcuNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIxMDU1IiBmaWxsPSIjZmZmIj5TVEFSIEJBU0VCQUxMUjwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9iaWxscGV0dGkvYmFzZWJhbGxyL3N0YXJnYXplcnMiPjxyZWN0IHdpZHRoPSI0OC43NSIgaGVpZ2h0PSIyOCIgeD0iMTQ2LjUiIGZpbGw9InJnYmEoMCwwLDAsMCkiLz48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iMTcwOC43NSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIyNDcuNSIgZmlsbD0iIzMzMyIgZm9udC13ZWlnaHQ9ImJvbGQiPjI4MTwvdGV4dD48L2E+PC9nPjwvc3ZnPg==" alt="GitHub stars" /></a></p>
+<h2>Follow the <a href="https://twitter.com/SportsDataverse">SportsDataverse</a> on
+Twitter and star this repo</h2>
+<p><a href="https://twitter.com/SportsDataverse"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjI2IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxNzIiIHdpZHRoPSI1NCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPVNwb3J0c0RhdGF2ZXJzZSI+PHJlY3Qgd2lkdGg9IjE3MiIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI5NDUiIHk9IjE3NSIgdGV4dExlbmd0aD0iMTMxMCIgZmlsbD0iI2ZmZiI+QFNQT1JUU0RBVEFWRVJTRTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vU3BvcnRzRGF0YXZlcnNlL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjU0IiBoZWlnaHQ9IjI4IiB4PSIxNzIiIGZpbGw9InJnYmEoMCwwLDAsMCkiLz48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iMTk5MCIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIzMDAiIGZpbGw9IiNmZmYiIGZvbnQtd2VpZ2h0PSJib2xkIj4xLjRLPC90ZXh0PjwvYT48L2c+PC9zdmc+" alt="Twitter Follow" /></a></p>
+<p><a href="https://github.com/billpetti/baseballr/stargazers/"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTk1LjI1IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxNDYuNSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjE0Ni41IiB3aWR0aD0iNDguNzUiIGhlaWdodD0iMjgiIGZpbGw9IiNlZWUiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTAwIj48aW1hZ2UgeD0iOSIgeT0iNyIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiB4bGluazpocmVmPSJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUJtYVd4c1BTSjNhR2wwWlhOdGIydGxJaUJ5YjJ4bFBTSnBiV2NpSUhacFpYZENiM2c5SWpBZ01DQXlOQ0F5TkNJZ2VHMXNibk05SW1oMGRIQTZMeTkzZDNjdWR6TXViM0puTHpJd01EQXZjM1puSWo0OGRHbDBiR1UrUjJsMFNIVmlQQzkwYVhSc1pUNDhjR0YwYUNCa1BTSk5NVElnTGpJNU4yTXROaTQyTXlBd0xURXlJRFV1TXpjekxURXlJREV5SURBZ05TNHpNRE1nTXk0ME16Z2dPUzQ0SURndU1qQTFJREV4TGpNNE5TNDJMakV4TXk0NE1pMHVNalU0TGpneUxTNDFOemNnTUMwdU1qZzFMUzR3TVMweExqQTBMUzR3TVRVdE1pNHdOQzB6TGpNek9DNDNNalF0TkM0d05ESXRNUzQyTVMwMExqQTBNaTB4TGpZeFF6UXVOREl5SURFNExqQTNJRE11TmpNeklERTNMamNnTXk0Mk16TWdNVGN1TjJNdE1TNHdPRGN0TGpjME5DNHdPRFF0TGpjeU9TNHdPRFF0TGpjeU9TQXhMakl3TlM0d09EUWdNUzQ0TXpnZ01TNHlNellnTVM0NE16Z2dNUzR5TXpZZ01TNHdOeUF4TGpnek5TQXlMamd3T1NBeExqTXdOU0F6TGpRNU5TNDVPVGd1TVRBNExTNDNOell1TkRFM0xURXVNekExTGpjMkxURXVOakExTFRJdU5qWTFMUzR6TFRVdU5EWTJMVEV1TXpNeUxUVXVORFkyTFRVdU9UTWdNQzB4TGpNeExqUTJOUzB5TGpNNElERXVNak0xTFRNdU1qSXRMakV6TlMwdU16QXpMUzQxTkMweExqVXlNeTR4TURVdE15NHhOellnTUNBd0lERXVNREExTFM0ek1qSWdNeTR6SURFdU1qTXVPVFl0TGpJMk55QXhMams0TFM0ek9Ua2dNeTB1TkRBMUlERXVNREl1TURBMklESXVNRFF1TVRNNElETWdMalF3TlNBeUxqSTRMVEV1TlRVeUlETXVNamcxTFRFdU1qTWdNeTR5T0RVdE1TNHlNeTQyTkRVZ01TNDJOVE11TWpRZ01pNDROek11TVRJZ015NHhOell1TnpZMUxqZzBJREV1TWpNZ01TNDVNU0F4TGpJeklETXVNaklnTUNBMExqWXhMVEl1T0RBMUlEVXVOakkxTFRVdU5EYzFJRFV1T1RJdU5ESXVNell1T0RFZ01TNHdPVFl1T0RFZ01pNHlNaUF3SURFdU5qQTJMUzR3TVRVZ01pNDRPVFl0TGpBeE5TQXpMakk0TmlBd0lDNHpNVFV1TWpFdU5qa3VPREkxTGpVM1F6SXdMalUyTlNBeU1pNHdPVElnTWpRZ01UY3VOVGt5SURJMElERXlMakk1TjJNd0xUWXVOakkzTFRVdU16Y3pMVEV5TFRFeUxURXlJaTgrUEM5emRtYysiLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL2JpbGxwZXR0aS9iYXNlYmFsbHIiPjxyZWN0IHdpZHRoPSIxNDYuNSIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI4MTcuNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIxMDU1IiBmaWxsPSIjZmZmIj5TVEFSIEJBU0VCQUxMUjwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9iaWxscGV0dGkvYmFzZWJhbGxyL3N0YXJnYXplcnMiPjxyZWN0IHdpZHRoPSI0OC43NSIgaGVpZ2h0PSIyOCIgeD0iMTQ2LjUiIGZpbGw9InJnYmEoMCwwLDAsMCkiLz48dGV4dCB0cmFuc2Zvcm09InNjYWxlKC4xKSIgeD0iMTcwOC43NSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSIyNDcuNSIgZmlsbD0iIzMzMyIgZm9udC13ZWlnaHQ9ImJvbGQiPjI5NzwvdGV4dD48L2E+PC9nPjwvc3ZnPg==" alt="GitHub stars" /></a></p>
 </div>
 <div id="our-authors" class="section level2">
 <h2><strong>Our Authors</strong></h2>
 <ul>
 <li><p><a href="https://twitter.com/BillPetti">Bill Petti</a><br />
-<a href="https://twitter.com/BillPetti" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTY4LjUiIGhlaWdodD0iMjgiPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjExNC41IiBoZWlnaHQ9IjI4IiBmaWxsPSIjNTU1Ii8+PHJlY3QgeD0iMTE0LjUiIHdpZHRoPSI1NCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPUJpbGxQZXR0aSI+PHJlY3Qgd2lkdGg9IjExNC41IiBoZWlnaHQ9IjI4IiBmaWxsPSJyZ2JhKDAsMCwwLDApIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ny41IiB5PSIxNzUiIHRleHRMZW5ndGg9IjczNSIgZmlsbD0iI2ZmZiI+QEJJTExQRVRUSTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vQmlsbFBldHRpL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjU0IiBoZWlnaHQ9IjI4IiB4PSIxMTQuNSIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxNDE1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjMwMCIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjQuNEs8L3RleHQ+PC9hPjwvZz48L3N2Zz4=" alt="@BillPetti" /></a> <a href="https://github.com/BillPetti" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYzIiBoZWlnaHQ9IjI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZPTExPV0VSUzogMTQzIj48dGl0bGU+Rk9MTE9XRVJTOiAxNDM8L3RpdGxlPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjExNC4yNSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjExNC4yNSIgd2lkdGg9IjQ4Ljc1IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWVlIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjEwMCI+PGltYWdlIHg9IjkiIHk9IjciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCbWFXeHNQU0ozYUdsMFpYTnRiMnRsSWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1IybDBTSFZpUEM5MGFYUnNaVDQ4Y0dGMGFDQmtQU0pOTVRJZ0xqSTVOMk10Tmk0Mk15QXdMVEV5SURVdU16Y3pMVEV5SURFeUlEQWdOUzR6TURNZ015NDBNemdnT1M0NElEZ3VNakExSURFeExqTTROUzQyTGpFeE15NDRNaTB1TWpVNExqZ3lMUzQxTnpjZ01DMHVNamcxTFM0d01TMHhMakEwTFM0d01UVXRNaTR3TkMwekxqTXpPQzQzTWpRdE5DNHdOREl0TVM0Mk1TMDBMakEwTWkweExqWXhRelF1TkRJeUlERTRMakEzSURNdU5qTXpJREUzTGpjZ015NDJNek1nTVRjdU4yTXRNUzR3T0RjdExqYzBOQzR3T0RRdExqY3lPUzR3T0RRdExqY3lPU0F4TGpJd05TNHdPRFFnTVM0NE16Z2dNUzR5TXpZZ01TNDRNemdnTVM0eU16WWdNUzR3TnlBeExqZ3pOU0F5TGpnd09TQXhMak13TlNBekxqUTVOUzQ1T1RndU1UQTRMUzQzTnpZdU5ERTNMVEV1TXpBMUxqYzJMVEV1TmpBMUxUSXVOalkxTFM0ekxUVXVORFkyTFRFdU16TXlMVFV1TkRZMkxUVXVPVE1nTUMweExqTXhMalEyTlMweUxqTTRJREV1TWpNMUxUTXVNakl0TGpFek5TMHVNekF6TFM0MU5DMHhMalV5TXk0eE1EVXRNeTR4TnpZZ01DQXdJREV1TURBMUxTNHpNaklnTXk0eklERXVNak11T1RZdExqSTJOeUF4TGprNExTNHpPVGtnTXkwdU5EQTFJREV1TURJdU1EQTJJREl1TURRdU1UTTRJRE1nTGpRd05TQXlMakk0TFRFdU5UVXlJRE11TWpnMUxURXVNak1nTXk0eU9EVXRNUzR5TXk0Mk5EVWdNUzQyTlRNdU1qUWdNaTQ0TnpNdU1USWdNeTR4TnpZdU56WTFMamcwSURFdU1qTWdNUzQ1TVNBeExqSXpJRE11TWpJZ01DQTBMall4TFRJdU9EQTFJRFV1TmpJMUxUVXVORGMxSURVdU9USXVOREl1TXpZdU9ERWdNUzR3T1RZdU9ERWdNaTR5TWlBd0lERXVOakEyTFM0d01UVWdNaTQ0T1RZdExqQXhOU0F6TGpJNE5pQXdJQzR6TVRVdU1qRXVOamt1T0RJMUxqVTNRekl3TGpVMk5TQXlNaTR3T1RJZ01qUWdNVGN1TlRreUlESTBJREV5TGpJNU4yTXdMVFl1TmpJM0xUVXVNemN6TFRFeUxURXlMVEV5SWk4K1BDOXpkbWMrIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ni4yNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI3MzIuNSIgZmlsbD0iI2ZmZiI+Rk9MTE9XRVJTPC90ZXh0Pjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxMzg2LjI1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjI0Ny41IiBmaWxsPSIjMzMzIiBmb250LXdlaWdodD0iYm9sZCI+MTQzPC90ZXh0PjwvZz48L3N2Zz4=" alt="@BillPetti" /></a></p></li>
+<a href="https://twitter.com/BillPetti" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTY4LjUiIGhlaWdodD0iMjgiPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjExNC41IiBoZWlnaHQ9IjI4IiBmaWxsPSIjNTU1Ii8+PHJlY3QgeD0iMTE0LjUiIHdpZHRoPSI1NCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPUJpbGxQZXR0aSI+PHJlY3Qgd2lkdGg9IjExNC41IiBoZWlnaHQ9IjI4IiBmaWxsPSJyZ2JhKDAsMCwwLDApIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ny41IiB5PSIxNzUiIHRleHRMZW5ndGg9IjczNSIgZmlsbD0iI2ZmZiI+QEJJTExQRVRUSTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vQmlsbFBldHRpL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjU0IiBoZWlnaHQ9IjI4IiB4PSIxMTQuNSIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxNDE1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjMwMCIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjQuNUs8L3RleHQ+PC9hPjwvZz48L3N2Zz4=" alt="@BillPetti" /></a>
+<a href="https://github.com/BillPetti" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYzIiBoZWlnaHQ9IjI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZPTExPV0VSUzogMTU3Ij48dGl0bGU+Rk9MTE9XRVJTOiAxNTc8L3RpdGxlPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjExNC4yNSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjExNC4yNSIgd2lkdGg9IjQ4Ljc1IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWVlIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjEwMCI+PGltYWdlIHg9IjkiIHk9IjciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCbWFXeHNQU0ozYUdsMFpYTnRiMnRsSWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1IybDBTSFZpUEM5MGFYUnNaVDQ4Y0dGMGFDQmtQU0pOTVRJZ0xqSTVOMk10Tmk0Mk15QXdMVEV5SURVdU16Y3pMVEV5SURFeUlEQWdOUzR6TURNZ015NDBNemdnT1M0NElEZ3VNakExSURFeExqTTROUzQyTGpFeE15NDRNaTB1TWpVNExqZ3lMUzQxTnpjZ01DMHVNamcxTFM0d01TMHhMakEwTFM0d01UVXRNaTR3TkMwekxqTXpPQzQzTWpRdE5DNHdOREl0TVM0Mk1TMDBMakEwTWkweExqWXhRelF1TkRJeUlERTRMakEzSURNdU5qTXpJREUzTGpjZ015NDJNek1nTVRjdU4yTXRNUzR3T0RjdExqYzBOQzR3T0RRdExqY3lPUzR3T0RRdExqY3lPU0F4TGpJd05TNHdPRFFnTVM0NE16Z2dNUzR5TXpZZ01TNDRNemdnTVM0eU16WWdNUzR3TnlBeExqZ3pOU0F5TGpnd09TQXhMak13TlNBekxqUTVOUzQ1T1RndU1UQTRMUzQzTnpZdU5ERTNMVEV1TXpBMUxqYzJMVEV1TmpBMUxUSXVOalkxTFM0ekxUVXVORFkyTFRFdU16TXlMVFV1TkRZMkxUVXVPVE1nTUMweExqTXhMalEyTlMweUxqTTRJREV1TWpNMUxUTXVNakl0TGpFek5TMHVNekF6TFM0MU5DMHhMalV5TXk0eE1EVXRNeTR4TnpZZ01DQXdJREV1TURBMUxTNHpNaklnTXk0eklERXVNak11T1RZdExqSTJOeUF4TGprNExTNHpPVGtnTXkwdU5EQTFJREV1TURJdU1EQTJJREl1TURRdU1UTTRJRE1nTGpRd05TQXlMakk0TFRFdU5UVXlJRE11TWpnMUxURXVNak1nTXk0eU9EVXRNUzR5TXk0Mk5EVWdNUzQyTlRNdU1qUWdNaTQ0TnpNdU1USWdNeTR4TnpZdU56WTFMamcwSURFdU1qTWdNUzQ1TVNBeExqSXpJRE11TWpJZ01DQTBMall4TFRJdU9EQTFJRFV1TmpJMUxUVXVORGMxSURVdU9USXVOREl1TXpZdU9ERWdNUzR3T1RZdU9ERWdNaTR5TWlBd0lERXVOakEyTFM0d01UVWdNaTQ0T1RZdExqQXhOU0F6TGpJNE5pQXdJQzR6TVRVdU1qRXVOamt1T0RJMUxqVTNRekl3TGpVMk5TQXlNaTR3T1RJZ01qUWdNVGN1TlRreUlESTBJREV5TGpJNU4yTXdMVFl1TmpJM0xUVXVNemN6TFRFeUxURXlMVEV5SWk4K1BDOXpkbWMrIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ni4yNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI3MzIuNSIgZmlsbD0iI2ZmZiI+Rk9MTE9XRVJTPC90ZXh0Pjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxMzg2LjI1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjI0Ny41IiBmaWxsPSIjMzMzIiBmb250LXdlaWdodD0iYm9sZCI+MTU3PC90ZXh0PjwvZz48L3N2Zz4=" alt="@BillPetti" /></a></p></li>
 <li><p><a href="https://twitter.com/saiemgilani">Saiem Gilani</a><br />
-<a href="https://twitter.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTg4IiBoZWlnaHQ9IjI4Ij48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxMzQiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxMzQiIHdpZHRoPSI1NCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzAwN2VjNiIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMDAiPjxpbWFnZSB4PSI5IiB5PSI3IiB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5Qm1hV3hzUFNJak1VUkJNVVl5SWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1ZIZHBkSFJsY2p3dmRHbDBiR1UrUEhCaGRHZ2daRDBpVFRJekxqazFNeUEwTGpVM1lURXdJREV3SURBZ01ERXRNaTQ0TWpVdU56YzFJRFF1T1RVNElEUXVPVFU0SURBZ01EQXlMakUyTXkweUxqY3lNMk10TGprMU1TNDFOVFV0TWk0d01EVXVPVFU1TFRNdU1USTNJREV1TVRnMFlUUXVPVElnTkM0NU1pQXdJREF3TFRndU16ZzBJRFF1TkRneVF6Y3VOamtnT0M0d09UVWdOQzR3TmpjZ05pNHhNeUF4TGpZMElETXVNVFl5WVRRdU9ESXlJRFF1T0RJeUlEQWdNREF0TGpZMk5pQXlMalEzTldNd0lERXVOekV1T0RjZ015NHlNVE1nTWk0eE9EZ2dOQzR3T1RaaE5DNDVNRFFnTkM0NU1EUWdNQ0F3TVMweUxqSXlPQzB1TmpFMmRpNHdObUUwTGpreU15QTBMamt5TXlBd0lEQXdNeTQ1TkRZZ05DNDRNamNnTkM0NU9UWWdOQzQ1T1RZZ01DQXdNUzB5TGpJeE1pNHdPRFVnTkM0NU16WWdOQzQ1TXpZZ01DQXdNRFF1TmpBMElETXVOREUzSURrdU9EWTNJRGt1T0RZM0lEQWdNREV0Tmk0eE1ESWdNaTR4TURWakxTNHpPU0F3TFM0M056a3RMakF5TXkweExqRTNMUzR3TmpkaE1UTXVPVGsxSURFekxqazVOU0F3SURBd055NDFOVGNnTWk0eU1EbGpPUzR3TlRNZ01DQXhNeTQ1T1RndE55NDBPVFlnTVRNdU9UazRMVEV6TGprNE5TQXdMUzR5TVNBd0xTNDBNaTB1TURFMUxTNDJNMEU1TGprek5TQTVMamt6TlNBd0lEQXdNalFnTkM0MU9Yb2lMejQ4TDNOMlp6ND0iLz48YSB0YXJnZXQ9Il9ibGFuayIgeGxpbms6aHJlZj0iaHR0cHM6Ly90d2l0dGVyLmNvbS9pbnRlbnQvZm9sbG93P3NjcmVlbl9uYW1lPXNhaWVtZ2lsYW5pIj48cmVjdCB3aWR0aD0iMTM0IiBoZWlnaHQ9IjI4IiBmaWxsPSJyZ2JhKDAsMCwwLDApIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9Ijc1NSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI5MzAiIGZpbGw9IiNmZmYiPkBTQUlFTUdJTEFOSTwvdGV4dD48L2E+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vc2FpZW1naWxhbmkvZm9sbG93ZXJzIj48cmVjdCB3aWR0aD0iNTQiIGhlaWdodD0iMjgiIHg9IjEzNCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxNjEwIiB5PSIxNzUiIHRleHRMZW5ndGg9IjMwMCIgZmlsbD0iI2ZmZiIgZm9udC13ZWlnaHQ9ImJvbGQiPjEuOEs8L3RleHQ+PC9hPjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a> <a href="https://github.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTU0Ljc1IiBoZWlnaHQ9IjI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZPTExPV0VSUzogOTEiPjx0aXRsZT5GT0xMT1dFUlM6IDkxPC90aXRsZT48ZyBzaGFwZS1yZW5kZXJpbmc9ImNyaXNwRWRnZXMiPjxyZWN0IHdpZHRoPSIxMTQuMjUiIGhlaWdodD0iMjgiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSIxMTQuMjUiIHdpZHRoPSI0MC41IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWVlIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjEwMCI+PGltYWdlIHg9IjkiIHk9IjciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCbWFXeHNQU0ozYUdsMFpYTnRiMnRsSWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1IybDBTSFZpUEM5MGFYUnNaVDQ4Y0dGMGFDQmtQU0pOTVRJZ0xqSTVOMk10Tmk0Mk15QXdMVEV5SURVdU16Y3pMVEV5SURFeUlEQWdOUzR6TURNZ015NDBNemdnT1M0NElEZ3VNakExSURFeExqTTROUzQyTGpFeE15NDRNaTB1TWpVNExqZ3lMUzQxTnpjZ01DMHVNamcxTFM0d01TMHhMakEwTFM0d01UVXRNaTR3TkMwekxqTXpPQzQzTWpRdE5DNHdOREl0TVM0Mk1TMDBMakEwTWkweExqWXhRelF1TkRJeUlERTRMakEzSURNdU5qTXpJREUzTGpjZ015NDJNek1nTVRjdU4yTXRNUzR3T0RjdExqYzBOQzR3T0RRdExqY3lPUzR3T0RRdExqY3lPU0F4TGpJd05TNHdPRFFnTVM0NE16Z2dNUzR5TXpZZ01TNDRNemdnTVM0eU16WWdNUzR3TnlBeExqZ3pOU0F5TGpnd09TQXhMak13TlNBekxqUTVOUzQ1T1RndU1UQTRMUzQzTnpZdU5ERTNMVEV1TXpBMUxqYzJMVEV1TmpBMUxUSXVOalkxTFM0ekxUVXVORFkyTFRFdU16TXlMVFV1TkRZMkxUVXVPVE1nTUMweExqTXhMalEyTlMweUxqTTRJREV1TWpNMUxUTXVNakl0TGpFek5TMHVNekF6TFM0MU5DMHhMalV5TXk0eE1EVXRNeTR4TnpZZ01DQXdJREV1TURBMUxTNHpNaklnTXk0eklERXVNak11T1RZdExqSTJOeUF4TGprNExTNHpPVGtnTXkwdU5EQTFJREV1TURJdU1EQTJJREl1TURRdU1UTTRJRE1nTGpRd05TQXlMakk0TFRFdU5UVXlJRE11TWpnMUxURXVNak1nTXk0eU9EVXRNUzR5TXk0Mk5EVWdNUzQyTlRNdU1qUWdNaTQ0TnpNdU1USWdNeTR4TnpZdU56WTFMamcwSURFdU1qTWdNUzQ1TVNBeExqSXpJRE11TWpJZ01DQTBMall4TFRJdU9EQTFJRFV1TmpJMUxUVXVORGMxSURVdU9USXVOREl1TXpZdU9ERWdNUzR3T1RZdU9ERWdNaTR5TWlBd0lERXVOakEyTFM0d01UVWdNaTQ0T1RZdExqQXhOU0F6TGpJNE5pQXdJQzR6TVRVdU1qRXVOamt1T0RJMUxqVTNRekl3TGpVMk5TQXlNaTR3T1RJZ01qUWdNVGN1TlRreUlESTBJREV5TGpJNU4yTXdMVFl1TmpJM0xUVXVNemN6TFRFeUxURXlMVEV5SWk4K1BDOXpkbWMrIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ni4yNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI3MzIuNSIgZmlsbD0iI2ZmZiI+Rk9MTE9XRVJTPC90ZXh0Pjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxMzQ1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjE2NSIgZmlsbD0iIzMzMyIgZm9udC13ZWlnaHQ9ImJvbGQiPjkxPC90ZXh0PjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a></p></li>
+<a href="https://twitter.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTc0LjUiIGhlaWdodD0iMjgiPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjEzNCIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjEzNCIgd2lkdGg9IjQwLjUiIGhlaWdodD0iMjgiIGZpbGw9IiMwMDdlYzYiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTAwIj48aW1hZ2UgeD0iOSIgeT0iNyIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiB4bGluazpocmVmPSJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUJtYVd4c1BTSWpNVVJCTVVZeUlpQnliMnhsUFNKcGJXY2lJSFpwWlhkQ2IzZzlJakFnTUNBeU5DQXlOQ0lnZUcxc2JuTTlJbWgwZEhBNkx5OTNkM2N1ZHpNdWIzSm5Mekl3TURBdmMzWm5JajQ4ZEdsMGJHVStWSGRwZEhSbGNqd3ZkR2wwYkdVK1BIQmhkR2dnWkQwaVRUSXpMamsxTXlBMExqVTNZVEV3SURFd0lEQWdNREV0TWk0NE1qVXVOemMxSURRdU9UVTRJRFF1T1RVNElEQWdNREF5TGpFMk15MHlMamN5TTJNdExqazFNUzQxTlRVdE1pNHdNRFV1T1RVNUxUTXVNVEkzSURFdU1UZzBZVFF1T1RJZ05DNDVNaUF3SURBd0xUZ3VNemcwSURRdU5EZ3lRemN1TmprZ09DNHdPVFVnTkM0d05qY2dOaTR4TXlBeExqWTBJRE11TVRZeVlUUXVPREl5SURRdU9ESXlJREFnTURBdExqWTJOaUF5TGpRM05XTXdJREV1TnpFdU9EY2dNeTR5TVRNZ01pNHhPRGdnTkM0d09UWmhOQzQ1TURRZ05DNDVNRFFnTUNBd01TMHlMakl5T0MwdU5qRTJkaTR3Tm1FMExqa3lNeUEwTGpreU15QXdJREF3TXk0NU5EWWdOQzQ0TWpjZ05DNDVPVFlnTkM0NU9UWWdNQ0F3TVMweUxqSXhNaTR3T0RVZ05DNDVNellnTkM0NU16WWdNQ0F3TURRdU5qQTBJRE11TkRFM0lEa3VPRFkzSURrdU9EWTNJREFnTURFdE5pNHhNRElnTWk0eE1EVmpMUzR6T1NBd0xTNDNOemt0TGpBeU15MHhMakUzTFM0d05qZGhNVE11T1RrMUlERXpMams1TlNBd0lEQXdOeTQxTlRjZ01pNHlNRGxqT1M0d05UTWdNQ0F4TXk0NU9UZ3ROeTQwT1RZZ01UTXVPVGs0TFRFekxqazROU0F3TFM0eU1TQXdMUzQwTWkwdU1ERTFMUzQyTTBFNUxqa3pOU0E1TGprek5TQXdJREF3TWpRZ05DNDFPWG9pTHo0OEwzTjJaejQ9Ii8+PGEgdGFyZ2V0PSJfYmxhbmsiIHhsaW5rOmhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vaW50ZW50L2ZvbGxvdz9zY3JlZW5fbmFtZT1zYWllbWdpbGFuaSI+PHJlY3Qgd2lkdGg9IjEzNCIgaGVpZ2h0PSIyOCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSI3NTUiIHk9IjE3NSIgdGV4dExlbmd0aD0iOTMwIiBmaWxsPSIjZmZmIj5AU0FJRU1HSUxBTkk8L3RleHQ+PC9hPjxhIHRhcmdldD0iX2JsYW5rIiB4bGluazpocmVmPSJodHRwczovL3R3aXR0ZXIuY29tL3NhaWVtZ2lsYW5pL2ZvbGxvd2VycyI+PHJlY3Qgd2lkdGg9IjQwLjUiIGhlaWdodD0iMjgiIHg9IjEzNCIgZmlsbD0icmdiYSgwLDAsMCwwKSIvPjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxNTQyLjUiIHk9IjE3NSIgdGV4dExlbmd0aD0iMTY1IiBmaWxsPSIjZmZmIiBmb250LXdlaWdodD0iYm9sZCI+M0s8L3RleHQ+PC9hPjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a>
+<a href="https://github.com/saiemgilani" target="blank"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTYzIiBoZWlnaHQ9IjI4IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkZPTExPV0VSUzogMTM1Ij48dGl0bGU+Rk9MTE9XRVJTOiAxMzU8L3RpdGxlPjxnIHNoYXBlLXJlbmRlcmluZz0iY3Jpc3BFZGdlcyI+PHJlY3Qgd2lkdGg9IjExNC4yNSIgaGVpZ2h0PSIyOCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjExNC4yNSIgd2lkdGg9IjQ4Ljc1IiBoZWlnaHQ9IjI4IiBmaWxsPSIjZWVlIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjEwMCI+PGltYWdlIHg9IjkiIHk9IjciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxNCIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCbWFXeHNQU0ozYUdsMFpYTnRiMnRsSWlCeWIyeGxQU0pwYldjaUlIWnBaWGRDYjNnOUlqQWdNQ0F5TkNBeU5DSWdlRzFzYm5NOUltaDBkSEE2THk5M2QzY3Vkek11YjNKbkx6SXdNREF2YzNabklqNDhkR2wwYkdVK1IybDBTSFZpUEM5MGFYUnNaVDQ4Y0dGMGFDQmtQU0pOTVRJZ0xqSTVOMk10Tmk0Mk15QXdMVEV5SURVdU16Y3pMVEV5SURFeUlEQWdOUzR6TURNZ015NDBNemdnT1M0NElEZ3VNakExSURFeExqTTROUzQyTGpFeE15NDRNaTB1TWpVNExqZ3lMUzQxTnpjZ01DMHVNamcxTFM0d01TMHhMakEwTFM0d01UVXRNaTR3TkMwekxqTXpPQzQzTWpRdE5DNHdOREl0TVM0Mk1TMDBMakEwTWkweExqWXhRelF1TkRJeUlERTRMakEzSURNdU5qTXpJREUzTGpjZ015NDJNek1nTVRjdU4yTXRNUzR3T0RjdExqYzBOQzR3T0RRdExqY3lPUzR3T0RRdExqY3lPU0F4TGpJd05TNHdPRFFnTVM0NE16Z2dNUzR5TXpZZ01TNDRNemdnTVM0eU16WWdNUzR3TnlBeExqZ3pOU0F5TGpnd09TQXhMak13TlNBekxqUTVOUzQ1T1RndU1UQTRMUzQzTnpZdU5ERTNMVEV1TXpBMUxqYzJMVEV1TmpBMUxUSXVOalkxTFM0ekxUVXVORFkyTFRFdU16TXlMVFV1TkRZMkxUVXVPVE1nTUMweExqTXhMalEyTlMweUxqTTRJREV1TWpNMUxUTXVNakl0TGpFek5TMHVNekF6TFM0MU5DMHhMalV5TXk0eE1EVXRNeTR4TnpZZ01DQXdJREV1TURBMUxTNHpNaklnTXk0eklERXVNak11T1RZdExqSTJOeUF4TGprNExTNHpPVGtnTXkwdU5EQTFJREV1TURJdU1EQTJJREl1TURRdU1UTTRJRE1nTGpRd05TQXlMakk0TFRFdU5UVXlJRE11TWpnMUxURXVNak1nTXk0eU9EVXRNUzR5TXk0Mk5EVWdNUzQyTlRNdU1qUWdNaTQ0TnpNdU1USWdNeTR4TnpZdU56WTFMamcwSURFdU1qTWdNUzQ1TVNBeExqSXpJRE11TWpJZ01DQTBMall4TFRJdU9EQTFJRFV1TmpJMUxUVXVORGMxSURVdU9USXVOREl1TXpZdU9ERWdNUzR3T1RZdU9ERWdNaTR5TWlBd0lERXVOakEyTFM0d01UVWdNaTQ0T1RZdExqQXhOU0F6TGpJNE5pQXdJQzR6TVRVdU1qRXVOamt1T0RJMUxqVTNRekl3TGpVMk5TQXlNaTR3T1RJZ01qUWdNVGN1TlRreUlESTBJREV5TGpJNU4yTXdMVFl1TmpJM0xUVXVNemN6TFRFeUxURXlMVEV5SWk4K1BDOXpkbWMrIi8+PHRleHQgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHg9IjY1Ni4yNSIgeT0iMTc1IiB0ZXh0TGVuZ3RoPSI3MzIuNSIgZmlsbD0iI2ZmZiI+Rk9MTE9XRVJTPC90ZXh0Pjx0ZXh0IHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB4PSIxMzg2LjI1IiB5PSIxNzUiIHRleHRMZW5ndGg9IjI0Ny41IiBmaWxsPSIjMzMzIiBmb250LXdlaWdodD0iYm9sZCI+MTM1PC90ZXh0PjwvZz48L3N2Zz4=" alt="@saiemgilani" /></a></p></li>
 </ul>
 </div>
 

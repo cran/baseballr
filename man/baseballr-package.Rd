@@ -6,9 +6,9 @@
 \alias{baseballr-package}
 \title{baseballr: Acquiring and Analyzing Baseball Data}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides numerous utilities for acquiring and analyzing baseball data from online sources such as Baseball Reference <https://www.baseball-reference.com/>, FanGraphs <https://www.fangraphs.com/>, and the MLB Stats API <https://www.mlb.com/>.
+Provides numerous utilities for acquiring and analyzing baseball data from online sources such as Baseball Reference \url{https://www.baseball-reference.com/}, FanGraphs \url{https://www.fangraphs.com/}, and the MLB Stats API \url{https://www.mlb.com/}.
 }
 \seealso{
 Useful links:
@@ -32,6 +32,7 @@ Other contributors:
   \item Ben Baumer \email{ben.baumer@gmail.com} [contributor]
   \item Ben Dilday \email{ben.dilday.phd@gmail.com} [contributor]
   \item Robert Frey \email{rfrey22@gmail.com} [contributor]
+  \item Camden Kay \email{camden.kay23@gmail.com} [contributor]
 }
 
 }

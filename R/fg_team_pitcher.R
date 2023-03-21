@@ -316,8 +316,13 @@
 #'   fg_team_pitcher(x = 2015, y = 2015, qual = 150)
 #' }
 
-fg_team_pitcher <- function(x, y, league = "all", qual = 0,
-                               pitcher_type = "pit", ind = 1) {
+fg_team_pitcher <- function(
+    x, 
+    y, 
+    league = "all", 
+    qual = 0,
+    pitcher_type = "pit", 
+    ind = 1) {
   
   if (ind == 0) {
     tryCatch(
@@ -328,11 +333,11 @@ fg_team_pitcher <- function(x, y, league = "all", qual = 0,
         payload <- url %>% 
           xml2::read_html()
         
-        leaders <- (payload %>%
-                      rvest::html_elements("table"))[[17]] %>% 
+        leaders <- payload %>%
+          rvest::html_elements("table.rgMasterTable") %>% 
           rvest::html_table()
         
-        leaders <- leaders[-c(1,3),]
+        leaders <- leaders[[1]][-c(1,3),]
         colnames(leaders) <- leaders[1,]
         leaders <- leaders[-1,]
         leaders <- leaders[,-4]
@@ -341,28 +346,28 @@ fg_team_pitcher <- function(x, y, league = "all", qual = 0,
         c <- gsub(" (pfx)", "_pfx", c, fixed = TRUE)
         c <- gsub(" (pi)", "_pi", c, fixed = TRUE)
         c <- gsub("/", "_", c, fixed = TRUE)
-        c <- ifelse(substr(c, nchar(c)-1+1, nchar(c)) == ".", gsub("\\.", "_pct", c), c)
+        c <- gsub(" ", "_", c, fixed = TRUE)
+        c <- ifelse(substr(c, nchar(c) - 1 + 1, nchar(c)) == ".", gsub("\\.", "_pct", c), c)
         r <- c("Start_IP", "Relief_IP", "WPA_minus",
                "WPA_plus", "FBall_pct", "AgeRng")
         c[c(55,57,64,65,75,216),] <- r
-        Seasons <- ifelse(x==y, paste0(x), paste0(x, "-", y))
+        Seasons <- ifelse(x == y, paste0(x), paste0(x, "-", y))
         names(leaders) <- c
         leaders <- leaders %>% 
-          dplyr::mutate(Season=Seasons) %>% 
-          dplyr::select(.data$Season,tidyr::everything())
-        leaders <- as.data.frame(sapply(leaders, function(x) (gsub("%", "", x))), stringsAsFactors=F)
-        leaders <- as.data.frame(sapply(leaders, function(x) (gsub("$", "", x, fixed = TRUE))), stringsAsFactors=F)
+          dplyr::mutate(Season = Seasons) %>% 
+          dplyr::select("Season", tidyr::everything())
+        leaders <- as.data.frame(sapply(leaders, function(x) (gsub("%", "", x))), stringsAsFactors = FALSE)
+        leaders <- as.data.frame(sapply(leaders, function(x) (gsub("$", "", x, fixed = TRUE))), stringsAsFactors = FALSE)
         leaders$Dol <- gsub("\\(", "-", leaders$Dol)
         leaders$Dol <- gsub("\\)", "", leaders$Dol)
         # Replace any empty cells with NA to avoid a warning message.
-        is.na(leaders) <- leaders==""
+        is.na(leaders) <- leaders == ""
         # Convert columns 5 to 300 to numeric, except column 217 "Age Rng"
-        for(i in c(4:215, 217:ncol(leaders))) {
+        for (i in c(4:215, 217:ncol(leaders))) {
           suppressWarnings(
             leaders[,i] <- as.numeric(as.character(leaders[,i]))
           )
         }
-        
         
         leaders <- leaders %>%
           make_baseballr_data("MLB Team Pitching data from FanGraphs.com",Sys.time())
@@ -370,16 +375,11 @@ fg_team_pitcher <- function(x, y, league = "all", qual = 0,
       error = function(e) {
         message(glue::glue("{Sys.time()}: Invalid arguments or no team data available!"))
       },
-      warning = function(w) {
-      },
       finally = {
       }
     )
     return(leaders)
-  }
-  
-  
-  else {
+  } else {
     tryCatch(
       expr = {
         
@@ -388,11 +388,12 @@ fg_team_pitcher <- function(x, y, league = "all", qual = 0,
         payload <- url %>% 
           xml2::read_html()
         
-        leaders <- (payload %>%
-                      rvest::html_elements("table"))[[17]] %>% 
+        leaders <- payload %>%
+          rvest::html_elements("table.rgMasterTable") %>% 
           rvest::html_table()
         
-        leaders <- leaders[-c(1,3),]
+        
+        leaders <- leaders[[1]][-c(1,3),]
         colnames(leaders) <- leaders[1,]
         leaders <- leaders[-1,]
         leaders <- leaders[,-4]
@@ -401,33 +402,30 @@ fg_team_pitcher <- function(x, y, league = "all", qual = 0,
         c <- gsub(" (pfx)", "_pfx", c, fixed = TRUE)
         c <- gsub(" (pi)", "_pi", c, fixed = TRUE)
         c <- gsub("/", "_", c, fixed = TRUE)
-        c <- ifelse(substr(c, nchar(c)-1+1, nchar(c)) == ".", gsub("\\.", "_pct", c), c)
+        c <- gsub(" ", "_", c, fixed = TRUE)
+        c <- ifelse(substr(c, nchar(c) - 1 + 1, nchar(c)) == ".", gsub("\\.", "_pct", c), c)
         r <- c("Start_IP", "Relief_IP", "WPA_minus",
                "WPA_plus", "FBall_pct", "AgeRng")
         c[c(55,57,64,65,75,216),] <- r
         names(leaders) <- c
         leaders <- leaders %>% 
-          dplyr::select(.data$Season,tidyr::everything())
+          dplyr::select("Season",tidyr::everything())
         leaders <- as.data.frame(sapply(leaders, function(x) (gsub("%", "", x))))
         leaders <- as.data.frame(sapply(leaders, function(x) (gsub("$", "", x, fixed = TRUE))))
         leaders$Dol <- gsub("\\(", "-", leaders$Dol)
         leaders$Dol <- gsub("\\)", "", leaders$Dol)
         # Convert columns 5 to 301 to numeric, except column 217 "Age Rng"
-        for(i in c(4:215, 217:ncol(leaders))) {
+        for (i in c(4:215, 217:ncol(leaders))) {
           suppressWarnings(
             leaders[,i] <- as.numeric(as.character(leaders[,i]))
           )
         }
-        
-        
         
         leaders <- leaders %>%
           make_baseballr_data("MLB Team Pitching data from FanGraphs.com",Sys.time())
       },
       error = function(e) {
         message(glue::glue("{Sys.time()}: Invalid arguments or no team data available!"))
-      },
-      warning = function(w) {
       },
       finally = {
       }

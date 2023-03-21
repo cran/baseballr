@@ -45,11 +45,11 @@
 #' @import rvest 
 #' @export
 #' @examples \donttest{
-#'   try(bref_daily_batter("2015-05-10", "2015-06-20"))
+#'   try(bref_daily_batter(t1="2015-05-10", t2="2015-06-20"))
 #' }
 
 bref_daily_batter <- function(t1, t2) {
-  
+
   tryCatch(
     expr = {
       payload <- xml2::read_html(paste0("http://www.baseball-reference.com/leagues/daily.cgi?user_team=&bust_cache=&type=b&lastndays=7&dates=fromandto&fromandto=", t1, ".", t2, "&level=mlb&franch=&stat=&stat_value=0"))
@@ -70,8 +70,6 @@ bref_daily_batter <- function(t1, t2) {
       df$Team <- gsub(" $", "", df$Team, perl=T)
       df <- df %>% 
         dplyr::filter(.data$Name != "Name")
-      df <- df %>% 
-        dplyr::arrange(desc(.data$PA), desc(.data$OPS))
       
       playerids <- payload %>%
         rvest::html_elements("table") %>%
@@ -79,14 +77,17 @@ bref_daily_batter <- function(t1, t2) {
         rvest::html_attr("href") %>%
         as.data.frame() %>%
         dplyr::rename(slug = ".") %>%
-        dplyr::filter(grepl("redirect", .data$slug)) %>%
-        dplyr::mutate(playerid = gsub("/redirect.fcgi\\?player=1&mlb_ID=", "", .data$slug))
+        dplyr::filter(grepl("players", .data$slug)) %>%
+        dplyr::mutate(playerid = gsub("/players/gl.fcgi\\?id=",
+                                  "", .data$slug)) %>%
+        dplyr::mutate(playerid = gsub("&t.*","",.data$playerid))
       
       df <- df %>%
         dplyr::mutate(bbref_id = playerids$playerid) %>%
-        dplyr::select(.data$bbref_id, tidyr::everything())
-      df <- df %>%
+        dplyr::select("bbref_id", tidyr::everything())
+      df <- df %>% dplyr::arrange(desc(.data$PA), desc(.data$OPS)) %>%
         make_baseballr_data("MLB Daily Batter data from baseball-reference.com",Sys.time())
+      Sys.sleep(5)
     },
     error = function(e) {
       message(glue::glue("{Sys.time()}: Invalid arguments or no daily batter data available!"))

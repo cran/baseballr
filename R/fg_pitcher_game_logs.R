@@ -161,7 +161,7 @@ fg_pitcher_game_logs <- function(playerid, year = 2017) {
                 year)
   
   tryCatch(
-    expr={
+    expr = {
       res <- httr::RETRY("GET", url)
       
       resp <- res %>% 
@@ -172,15 +172,14 @@ fg_pitcher_game_logs <- function(playerid, year = 2017) {
       payload <- payload[-1,]
       payload <- payload %>% 
         dplyr::mutate(
-          Date = stringr::str_extract(.data$Date,"(?<=>).+(?=<)")) %>% 
-        dplyr::select(.data$PlayerName, .data$playerid, tidyr::everything())
+          Date = stringr::str_extract(.data$Date,"(?<=>).+(?=<)"))
+      payload <- payload %>% 
+        dplyr::select("PlayerName", "playerid", tidyr::everything())
       payload <- payload %>%
         make_baseballr_data("MLB Pitcher Game Log data from FanGraphs.com",Sys.time())
     },
     error = function(e) {
       message(glue::glue("{Sys.time()}: Invalid arguments or no pitcher game log data available!"))
-    },
-    warning = function(w) {
     },
     finally = {
     }

@@ -4,13 +4,17 @@
 \alias{get_ncaa_schedule_info}
 \title{\strong{(legacy) Get Schedule and Results for NCAA Baseball Teams}}
 \usage{
-get_ncaa_schedule_info(teamid = NULL, year = NULL)
+get_ncaa_schedule_info(team_id = NULL, year = NULL, pbp_links = FALSE, ...)
 }
 \arguments{
-\item{teamid}{The team's unique NCAA id.}
+\item{team_id}{The team's unique NCAA id.}
 
 \item{year}{The season (i.e. use 2016 for the 2015-2016 season,
 etc.)}
+
+\item{pbp_links}{Logical parameter to run process for scraping play_by_play urls for each game}
+
+\item{...}{Additional arguments passed to an underlying function like httr.}
 }
 \value{
 A data frame with the following fields: date, opponent,

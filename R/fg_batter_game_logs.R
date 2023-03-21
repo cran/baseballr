@@ -308,16 +308,15 @@ fg_batter_game_logs <- function(playerid, year = 2017) {
       payload <- payload[-1,]
       payload <- payload %>% 
         dplyr::mutate(
-          Date = stringr::str_extract(.data$Date,"(?<=>).+(?=<)")) %>% 
-        dplyr::select(.data$PlayerName, .data$playerid, tidyr::everything())
+          Date = stringr::str_extract(.data$Date,"(?<=>).+(?=<)"))
+      payload <- payload %>% 
+        dplyr::select("PlayerName", "playerid", tidyr::everything())
       
       payload <- payload %>%
         make_baseballr_data("MLB Batter Game Logs data from FanGraphs.com",Sys.time())
     },
     error = function(e) {
       message(glue::glue("{Sys.time()}: Invalid arguments or no batter game logs data available!"))
-    },
-    warning = function(w) {
     },
     finally = {
     }

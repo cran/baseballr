@@ -122,13 +122,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -341,84 +348,130 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The latest release of the <a href="https://billpetti.github.io/baseballr/"><code>baseballr</code></a>
 includes a function for acquiring player statistics from the <a href="http://stats.ncaa.org">NCAA’s website</a> for baseball teams
 across the three major divisions (I, II, III).</p>
-<p>The function, <code>ncaa_scrape</code>, requires the user to pass
-values for three parameters for the function to work:</p>
-<p><code>school_id</code>: numerical code used by the NCAA for each
-school <code>year</code>: a four-digit year <code>type</code>: whether
-to pull data for batters or pitchers</p>
-<p>If you want to pull batting statistics for Vanderbilt for the 2013
-season, you would use the following:</p>
+<p>In order to look up teams, you can either load the teams for all
+divisions from the <code>baseballr-data</code> repository or access them
+directly from the NCAA website for a given year and division.</p>
+<p>Loading from the baseballr-data repository:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(baseballr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;dplyr&#39; was built under R version 4.2.1</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     filter, lag</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ncaa_scrape</span>(<span class="dv">736</span>, <span class="dv">2021</span>, <span class="st">&quot;batting&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>OBPct)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── NCAA Baseball Team Stats data from stats.ncaa.org ──────── baseballr 1.3.0 ──</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Data updated: 2022-09-09 03:29:54 EDT</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 41 × 12</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     year school     confer…¹ divis…² Jersey Player Yr    Pos      GP    GS    BA</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  2021 Vanderbilt SEC            1 51     Bradf… Fr    OF       67    67 0.336</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  2021 Vanderbilt SEC            1 25     Nolan… So    INF      66    66 0.26 </span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  2021 Vanderbilt SEC            1 99     Gonza… So    INF      61    58 0.28 </span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  2021 Vanderbilt SEC            1 9      Young… So    INF      61    61 0.252</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  2021 Vanderbilt SEC            1 12     Keega… Jr    UT       60    60 0.345</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6  2021 Vanderbilt SEC            1 8      Thoma… Jr    OF       59    57 0.305</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7  2021 Vanderbilt SEC            1 5      Rodri… So    C        58    52 0.249</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8  2021 Vanderbilt SEC            1 16     Bulge… Fr    UT       50    41 0.274</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  2021 Vanderbilt SEC            1 6      Kolwy… Jr    INF      43    39 0.29 </span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  2021 Vanderbilt SEC            1 19     LaNev… So    OF       37    19 0.286</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 31 more rows, 1 more variable: OBPct &lt;dbl&gt;, and abbreviated variable</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   names ¹​conference, ²​division</span></span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;dplyr&#39;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ncaa_teams_df <span class="ot">&lt;-</span> <span class="fu">load_ncaa_baseball_teams</span>()</span></code></pre></div>
+<p>From the NCAA website:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">try</span>(<span class="fu">ncaa_teams</span>(<span class="at">year =</span> <span class="fu">most_recent_ncaa_baseball_season</span>(), <span class="at">division =</span> <span class="st">&quot;1&quot;</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── NCAA Baseball Teams data from stats.ncaa.org ───────────── baseballr 1.5.0 ──</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Data updated: 2023-03-20 10:00:07 EDT</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 305 × 8</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    team_id team_name      team_url        confer…¹ confe…² divis…³  year seaso…⁴</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 140     Cincinnati     /team/140/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 196     East Carolina  /team/196/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 288     Houston        /team/288/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 404     Memphis        /team/404/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 651     South Fla.     /team/651/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 718     Tulane         /team/718/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 128     UCF            /team/128/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 782     Wichita St.    /team/782/16340 823      AAC     1        2023 16340  </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 67      Boston College /team/67/16340  821      ACC     1        2023 16340  </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 147     Clemson        /team/147/16340 821      ACC     1        2023 16340  </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 295 more rows, and abbreviated variable names ¹​conference_id,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ²​conference, ³​division, ⁴​season_id</span></span></code></pre></div>
+<p>The function, <code>ncaa_team_player_stats()</code>, requires the
+user to pass values for three parameters for the function to work:</p>
+<p><code>team_id</code>: numerical code used by the NCAA for each school
+<code>year</code>: a four-digit year <code>type</code>: whether to pull
+data for batters or pitchers</p>
+<p>If you want to pull batting statistics for Florida State for the 2023
+season, you would use the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>team_id <span class="ot">&lt;-</span> ncaa_teams_df <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>team_name <span class="sc">==</span> <span class="st">&quot;Florida St.&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="st">&quot;team_id&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(<span class="st">&quot;team_id&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">most_recent_ncaa_baseball_season</span>()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ncaa_team_player_stats</span>(<span class="at">team_id =</span> team_id, <span class="at">year =</span> year, <span class="st">&quot;batting&quot;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── NCAA Baseball Team Batting Stats data from stats.ncaa.org ───────────────────</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Data updated: 2023-03-20 10:00:11 EDT</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 37 × 35</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     year team_name team_id confe…¹ confe…² divis…³ playe…⁴ playe…⁵ playe…⁶ Yr   </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  2023 Florida …     234     821 ACC           1 2649339 http:/… Tibbs … So   </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  2023 Florida …     234     821 ACC           1 2649334 http:/… Ferrer… So   </span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  2023 Florida …     234     821 ACC           1 2478605 http:/… Carrio… Jr   </span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  2023 Florida …     234     821 ACC           1 2468075 http:/… Vincen… Sr   </span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  2023 Florida …     234     821 ACC           1 2112619 http:/… De Sed… Sr   </span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6  2023 Florida …     234     821 ACC           1 2649307 http:/… Rank, … So   </span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7  2023 Florida …     234     821 ACC           1 2797459 http:/… Smith,… Fr   </span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8  2023 Florida …     234     821 ACC           1 2649340 http:/… Bush, … So   </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  2023 Florida …     234     821 ACC           1 2797428 http:/… Kamaka… Fr   </span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  2023 Florida …     234     821 ACC           1 2797465 http:/… Willia… So   </span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 27 more rows, 25 more variables: Pos &lt;chr&gt;, Jersey &lt;chr&gt;, GP &lt;dbl&gt;,</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   GS &lt;dbl&gt;, BA &lt;dbl&gt;, OBPct &lt;dbl&gt;, SlgPct &lt;dbl&gt;, R &lt;dbl&gt;, AB &lt;dbl&gt;, H &lt;dbl&gt;,</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   `2B` &lt;dbl&gt;, `3B` &lt;dbl&gt;, TB &lt;dbl&gt;, HR &lt;dbl&gt;, RBI &lt;dbl&gt;, BB &lt;dbl&gt;, HBP &lt;dbl&gt;,</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   SF &lt;dbl&gt;, SH &lt;dbl&gt;, K &lt;dbl&gt;, DP &lt;dbl&gt;, CS &lt;dbl&gt;, Picked &lt;dbl&gt;, SB &lt;dbl&gt;,</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   RBI2out &lt;dbl&gt;, and abbreviated variable names ¹​conference_id, ²​conference,</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ³​division, ⁴​player_id, ⁵​player_url, ⁶​player_name</span></span></code></pre></div>
 <p>The same can be done for pitching, just by changing the
 <code>type</code> parameter:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncaa_scrape</span>(<span class="dv">736</span>, <span class="dv">2021</span>, <span class="st">&quot;pitching&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year<span class="sc">:</span>ERA)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── NCAA Baseball Team Stats data from stats.ncaa.org ──────── baseballr 1.3.0 ──</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Data updated: 2022-09-09 03:29:55 EDT</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 41 × 12</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     year school     confer…¹ divis…² Jersey Player Yr    Pos      GP   App    GS</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  2021 Vanderbilt SEC            1 51     Bradf… Fr    OF       67    67    NA</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  2021 Vanderbilt SEC            1 25     Nolan… So    INF      66    66    NA</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  2021 Vanderbilt SEC            1 99     Gonza… So    INF      61    61    NA</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  2021 Vanderbilt SEC            1 9      Young… So    INF      61    61    NA</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  2021 Vanderbilt SEC            1 12     Keega… Jr    UT       60    60    NA</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6  2021 Vanderbilt SEC            1 8      Thoma… Jr    OF       59    59    NA</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7  2021 Vanderbilt SEC            1 5      Rodri… So    C        58    58    NA</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8  2021 Vanderbilt SEC            1 16     Bulge… Fr    UT       50    50    NA</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  2021 Vanderbilt SEC            1 6      Kolwy… Jr    INF      43    43    NA</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  2021 Vanderbilt SEC            1 19     LaNev… So    OF       37    37    NA</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 31 more rows, 1 more variable: ERA &lt;dbl&gt;, and abbreviated variable</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   names ¹​conference, ²​division</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncaa_team_player_stats</span>(<span class="at">team_id =</span> team_id, <span class="at">year =</span> year,  <span class="st">&quot;pitching&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── NCAA Baseball Team Pitching Stats data from stats.ncaa.org ──────────────────</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Data updated: 2023-03-20 10:00:16 EDT</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 37 × 43</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     year team_name team_id confe…¹ confe…² divis…³ playe…⁴ playe…⁵ playe…⁶ Yr   </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;   &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  2023 Florida …     234     821 ACC           1 2649339 http:/… Tibbs … So   </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2  2023 Florida …     234     821 ACC           1 2649334 http:/… Ferrer… So   </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3  2023 Florida …     234     821 ACC           1 2478605 http:/… Carrio… Jr   </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4  2023 Florida …     234     821 ACC           1 2468075 http:/… Vincen… Sr   </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  2023 Florida …     234     821 ACC           1 2112619 http:/… De Sed… Sr   </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6  2023 Florida …     234     821 ACC           1 2649307 http:/… Rank, … So   </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7  2023 Florida …     234     821 ACC           1 2797459 http:/… Smith,… Fr   </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8  2023 Florida …     234     821 ACC           1 2649340 http:/… Bush, … So   </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9  2023 Florida …     234     821 ACC           1 2797428 http:/… Kamaka… Fr   </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10  2023 Florida …     234     821 ACC           1 2797465 http:/… Willia… So   </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 27 more rows, 33 more variables: Pos &lt;chr&gt;, Jersey &lt;chr&gt;, GP &lt;dbl&gt;,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   App &lt;dbl&gt;, GS &lt;dbl&gt;, ERA &lt;dbl&gt;, IP &lt;dbl&gt;, H &lt;dbl&gt;, R &lt;dbl&gt;, ER &lt;dbl&gt;,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   BB &lt;dbl&gt;, SO &lt;dbl&gt;, SHO &lt;dbl&gt;, BF &lt;dbl&gt;, `P-OAB` &lt;dbl&gt;, `2B-A` &lt;dbl&gt;,</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   `3B-A` &lt;dbl&gt;, Bk &lt;dbl&gt;, `HR-A` &lt;dbl&gt;, WP &lt;dbl&gt;, HB &lt;dbl&gt;, IBB &lt;dbl&gt;,</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   `Inh Run` &lt;dbl&gt;, `Inh Run Score` &lt;dbl&gt;, SHA &lt;dbl&gt;, SFA &lt;dbl&gt;,</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   Pitches &lt;dbl&gt;, GO &lt;dbl&gt;, FO &lt;dbl&gt;, W &lt;dbl&gt;, L &lt;dbl&gt;, SV &lt;dbl&gt;, KL &lt;dbl&gt;,</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   and abbreviated variable names ¹​conference_id, ²​conference, ³​division, …</span></span></code></pre></div>
 <p>Now, the function is dependent on the user knowing the
-<code>school_id</code> used by the NCAA website. Given that, I’ve
-included a <code>ncaa_school_id_lu</code> function so that users can
-find the <code>school_id</code> they need.</p>
+<code>team_id</code> used by the NCAA website. Given that, I’ve included
+a <code>ncaa_school_id_lu</code> function so that users can find the
+<code>team_id</code> they need.</p>
 <p>Just pass a string to the function and it will return possible
 matches based on the school’s name:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncaa_school_id_lu</span>(<span class="st">&quot;Vand&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 6</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    school     conference school_id  year division conference_id</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;         &lt;dbl&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 Vanderbilt SEC              736  2013        1           911</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 Vanderbilt SEC              736  2014        1           911</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 Vanderbilt SEC              736  2015        1           911</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 Vanderbilt SEC              736  2016        1           911</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 Vanderbilt SEC              736  2017        1           911</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 Vanderbilt SEC              736  2018        1           911</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 Vanderbilt SEC              736  2019        1           911</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 Vanderbilt SEC              736  2020        1           911</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 Vanderbilt SEC              736  2021        1           911</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Vanderbilt SEC              736  2022        1           911</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncaa_school_id_lu</span>(<span class="st">&quot;Vand&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ───────────────────────────────────────────────────────────── baseballr 1.5.0 ──</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 14 × 8</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    team_id team_name  team_url        conference…¹ confe…² divis…³  year seaso…⁴</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1     736 Vanderbilt /team/736/16340          911 SEC           1  2023   16340</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2     736 Vanderbilt /team/736/15860          911 SEC           1  2022   15860</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3     736 Vanderbilt /team/736/15580          911 SEC           1  2021   15580</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4     736 Vanderbilt /team/736/15204          911 SEC           1  2020   15204</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5     736 Vanderbilt /team/736/15204          911 SEC           1  2019   15204</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6     736 Vanderbilt /team/736/12973          911 SEC           1  2018   12973</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7     736 Vanderbilt /team/736/12560          911 SEC           1  2017   12560</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8     736 Vanderbilt /team/736/12360          911 SEC           1  2016   12360</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9     736 Vanderbilt /team/736/12080          911 SEC           1  2015   12080</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     736 Vanderbilt /team/736/11620          911 SEC           1  2014   11620</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11     736 Vanderbilt /team/736/11320          911 SEC           1  2013   11320</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12     736 Vanderbilt /team/736/10942          911 SEC           1  2012   10942</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13     736 Vanderbilt /team/736/10561          911 SEC           1  2011   10561</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14     736 Vanderbilt /team/736/10240          911 SEC           1  2010   10240</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with abbreviated variable names ¹​conference_id, ²​conference, ³​division,</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   ⁴​season_id</span></span></code></pre></div>
 
 
 

@@ -1,14 +1,14 @@
 
 cols <- c(
   "year",
-  "last_name",
-  "first_name",
+  "last_name, first_name",
   "player_id",
   "attempts",
   "avg_hit_angle",
   "anglesweetspotpercent",
   "max_hit_speed",
   "avg_hit_speed",
+  "ev50",
   "fbld",
   "gb",
   "max_distance",
